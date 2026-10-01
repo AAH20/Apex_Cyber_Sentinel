@@ -104,6 +104,60 @@ graph TB
     ALERT -.->|Triggers| COEVO
 ```
 
+### Defense-in-Depth Architecture
+
+```mermaid
+flowchart LR
+    subgraph Layer1["Layer 1: Perimeter"]
+        FW[Firewall]
+        WAF[WAF]
+        DDoS[DDoS Protection]
+    end
+
+    subgraph Layer2["Layer 2: Network"]
+        IDS[IDS/IPS]
+        NTA[Network Traffic Analysis]
+        SEG[Micro-Segmentation]
+    end
+
+    subgraph Layer3["Layer 3: Endpoint"]
+        EDR[EDR]
+        AV[Anti-Virus]
+        HIPS[Host IPS]
+    end
+
+    subgraph Layer4["Layer 4: Application"]
+        RASP[RASP]
+        API_SEC[API Security]
+        SAST[SAST/DAST]
+    end
+
+    subgraph Layer5["Layer 5: Data"]
+        DLP[DLP]
+        ENC[Encryption]
+        IAM[IAM]
+    end
+
+    subgraph Layer6["Layer 6: Identity"]
+        MFA[MFA]
+        PAM[PAM]
+        SSO[SSO]
+    end
+
+    Layer1 --> Layer2
+    Layer2 --> Layer3
+    Layer3 --> Layer4
+    Layer4 --> Layer5
+    Layer5 --> Layer6
+
+    style Layer1 fill:#ffebee,stroke:#c62828
+    style Layer2 fill:#fff3e0,stroke:#e65100
+    style Layer3 fill:#e3f2fd,stroke:#1565c0
+    style Layer4 fill:#f3e5f5,stroke:#6a1b9a
+    style Layer5 fill:#e8f5e9,stroke:#2e7d32
+    style Layer6 fill:#fce4ec,stroke:#ad1457
+```
+
 ---
 
 ## Adversarial Co-Evolution Loop
@@ -145,6 +199,31 @@ flowchart LR
     style Red fill:#ffebee,stroke:#c62828
     style Blue fill:#e3f2fd,stroke:#1565c0
     style Purple fill:#f3e5f5,stroke:#6a1b9a
+```
+
+### Co-Evolution Cycle Detail
+
+```mermaid
+flowchart TD
+    START([Start Iteration]) --> GEN[Generate Attack Scenarios<br/>From Threat Landscape]
+    GEN --> SIM[Simulate Attacks<br/>Against Current Defenses]
+    SIM --> EVAL{Evaluate Outcomes}
+    EVAL -->|Attack Succeeded| GAP[Identify Defense Gaps]
+    EVAL -->|Attack Blocked| STRENGTHEN[Strengthen Existing Controls]
+    GAP --> AUTO[Auto-Generate New Defenses<br/>ML-Based Recommendation]
+    AUTO --> VALIDATE[Validate New Controls<br/>Test Against Known Attacks]
+    VALIDATE --> UPDATE[Update Defense Registry]
+    STRENGTHEN --> UPDATE
+    UPDATE --> METRICS[Update Metrics<br/>Coverage · Success Rate]
+    METRICS --> NEXT{More Iterations?}
+    NEXT -->|Yes| GEN
+    NEXT -->|No| REPORT[Generate Purple Team Report<br/>Gaps · Recommendations]
+    REPORT --> END([End])
+
+    style START fill:#e8f5e9,stroke:#2e7d32
+    style END fill:#e8f5e9,stroke:#2e7d32
+    style GAP fill:#ffebee,stroke:#c62828
+    style REPORT fill:#f3e5f5,stroke:#6a1b9a
 ```
 
 ### Co-Evolution Metrics
@@ -288,7 +367,7 @@ flowchart TD
     HYP --> TEST
     SYSLOG --> MATCH
     EDR_EVT --> MATCH
-    NET_ETP --> TTP_DET
+    NET_EVT --> TTP_DET
     AUTH_EVT --> TTP_DET
 
     MATCH --> TEST
@@ -394,8 +473,8 @@ graph TB
         end
 
         subgraph Decoys["Decoys"]
-            D1[Credential Decoy<br/>admin:******
-            D2[File Decoy<br/>secret.docx
+            D1[Credential Decoy<br/>admin:******]
+            D2[File Decoy<br/>secret.docx]
             D3[Service Decoy<br/>fake-api]
             D4[Database Decoy<br/>shadow DB]
         end
@@ -894,6 +973,8 @@ pytest tests/integration/ -v
 | Threat Hunting | `test_hunting.py` | 20+ |
 | Integration | `test_cyber.py` | 12 E2E |
 
+**Total: 669 tests across 29 files covering 10 topics**
+
 ---
 
 ## Project Structure
@@ -934,12 +1015,34 @@ Apex_Cyber_Sentinel/
 
 ## License
 
-AGPL-3.0 — See [LICENSE](LICENSE) for details.
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+
+```
+Apex Cyber Sentinel — Autonomous Cyber Defense Platform
+Copyright (C) 2024 Ahmed Hassan
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+```
+
+See [LICENSE](LICENSE) for the full license text.
 
 ---
 
 <div align="center">
 
 **Apex Cyber Sentinel** — *Autonomous defense through adversarial co-evolution.*
+
+**669 tests · 29 files · 10 topics · AGPL-3.0**
 
 </div>
